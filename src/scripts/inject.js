@@ -1,6 +1,5 @@
 document.addEventListener("MessengerBadges-Initialize", () => {
-  function doTheThing() {
-
+  function addBadges() {
     const chatElement = document.querySelector("a[aria-label*='Chats']");
 
     function setUnreadBadge(textToParse) {
@@ -17,21 +16,20 @@ document.addEventListener("MessengerBadges-Initialize", () => {
       }
     }
 
-  
-  checkForUnreadMessages();
+    checkForUnreadMessages();
 
-  const observer = new MutationObserver((mutations) => {
-    for (let mutation of mutations) {
-      checkForUnreadMessages();
-    }
-  });
+    const observer = new MutationObserver((mutations) => {
+      for (let mutation of mutations) {
+        checkForUnreadMessages();
+      }
+    });
 
-  observer.observe(chatElement, {
-    characterData: true,
-    childList: true,
-    subtree: true,
-  });
-}
+    observer.observe(chatElement, {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
+  }
 
-setTimeout(doTheThing, 4000);
+  setTimeout(addBadges, 4000);
 });
