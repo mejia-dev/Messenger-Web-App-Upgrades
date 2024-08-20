@@ -33,3 +33,30 @@ document.addEventListener("MessengerBadges-Initialize", () => {
 
   setTimeout(addBadges, 4000);
 });
+
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape' && !document.querySelector("*[aria-label='Media viewer']")) {
+
+    document.querySelector("a[aria-label='New message']").click();
+    window.history.replaceState({}, "Messenger", "/t/");
+
+
+    function hideChatUI() {
+      const newChat = document.evaluate("//*[@data-virtualized='false']/../../../div", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+      const chatScreenContent = document.evaluate("//*[contains(@aria-label,'Thread list')]/following::div/div[1]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+      const chatPopup = document.evaluate("//*[@role='listbox']/..", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+      newChat.style.display = "none";
+      chatScreenContent.style.display = "none";
+      chatPopup.style.display = "none";
+    }
+
+    setTimeout(() => {
+      hideChatUI();
+    }, 100);
+
+  }
+});
