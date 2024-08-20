@@ -5,7 +5,7 @@
   script.setAttribute("type", "text/javascript");
   script.onload = function () {
     this.remove();
-    document.dispatchEvent(new CustomEvent("MessengerBadges-Initialize"));
+    document.dispatchEvent(new CustomEvent("MPWAI-StartBadges"));
   }
   document.head.appendChild(script);
 })();

@@ -1,4 +1,4 @@
-document.addEventListener("MessengerBadges-Initialize", () => {
+document.addEventListener("MPWAI-StartBadges", () => {
   function addBadges() {
     const chatElement = document.querySelector("a[aria-label*='Chats']");
 
