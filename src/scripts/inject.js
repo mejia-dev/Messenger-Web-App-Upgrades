@@ -38,25 +38,41 @@ document.addEventListener("MessengerBadges-Initialize", () => {
 document.addEventListener('keydown', function (event) {
   if (event.key === 'Escape' && !document.querySelector("*[aria-label='Media viewer']")) {
 
-    document.querySelector("a[aria-label='New message']").click();
+    const newMessageButton = document.querySelector("a[aria-label='New message']");
+    newMessageButton.click();
+    newMessageButton.addEventListener("click", (e) => {
+      document.dispatchEvent(new CustomEvent("MPWAI-NewChat"));
+    })
     window.history.replaceState({}, "Messenger", "/t/");
 
-
-    function hideChatUI() {
-      const newChat = document.evaluate("//*[@data-virtualized='false']/../../../div", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-      const chatScreenContent = document.evaluate("//*[contains(@aria-label,'Thread list')]/following::div/div[1]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-      const chatPopup = document.evaluate("//*[@role='listbox']/..", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-      newChat.style.display = "none";
-      chatScreenContent.style.display = "none";
-      chatPopup.style.display = "none";
-    }
-
     setTimeout(() => {
-      hideChatUI();
+      document.dispatchEvent(new CustomEvent("MPWAI-CloseChat"));
     }, 100);
 
   }
+});
+
+document.addEventListener("MPWAI-CloseChat", () => {
+  const newChat = document.evaluate("//*[@data-virtualized='false']/../../../div", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  const chatScreenContent = document.evaluate("//*[contains(@aria-label,'Thread list')]/following::div/div[1]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  const chatPopup = document.evaluate("//*[@role='listbox']/..", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+  newChat.style.display = "none";
+  chatScreenContent.style.display = "none";
+  if (chatPopup != null) {
+    chatPopup.style.display = "none";
+  }
+  
+});
+
+document.addEventListener("MPWAI-NewChat", () => {
+  setTimeout(() => {
+    if (window.location.href.contains("/new")) {
+      const newChat = document.evaluate("//*[@data-virtualized='false']/../../../div", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+      const chatScreenContent = document.evaluate("//*[contains(@aria-label,'Thread list')]/following::div/div[1]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+      newChat.style.display = "";
+      chatScreenContent.style.display = "";
+    }
+  }, 100);
 });
