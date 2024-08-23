@@ -9,10 +9,12 @@ document.addEventListener("MPWAI-StartBadges", () => {
     }
 
     function checkForUnreadMessages() {
-      if (chatElement.textContent != "") {
-        setUnreadBadge(chatElement.textContent);
-      } else {
-        navigator.clearAppBadge();
+      if (chatElement != null) {
+        if (chatElement.textContent != "") {
+          setUnreadBadge(chatElement.textContent);
+        } else {
+          navigator.clearAppBadge();
+        }
       }
     }
 
@@ -48,7 +50,6 @@ document.addEventListener('keydown', function (event) {
     setTimeout(() => {
       document.dispatchEvent(new CustomEvent("MPWAI-CloseChat"));
     }, 100);
-
   }
 });
 
@@ -62,7 +63,6 @@ document.addEventListener("MPWAI-CloseChat", () => {
   if (chatPopup != null) {
     chatPopup.style.display = "none";
   }
-  
 });
 
 document.addEventListener("MPWAI-NewChat", () => {
