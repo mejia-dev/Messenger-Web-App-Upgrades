@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css'
 
 export default function App(): JSX.Element {
@@ -15,8 +15,8 @@ export default function App(): JSX.Element {
       reader.onload = function (e: ProgressEvent<FileReader>) {
         const audioDataURL = e.target!.result as string;
         chromeStorage.set({ uploadedAudio: audioDataURL },
-          function () {
-            document.getElementById("message")!.innerText = "Successfully uploaded file. Please refresh the page to activate the custom sound.";
+          () => {
+            setStatusMessage("Successfully uploaded file. Please refresh the page to activate the custom sound.");
             loadAudio();
           }
         );
@@ -41,6 +41,11 @@ export default function App(): JSX.Element {
       }
     });
   }
+
+
+  useEffect(() => {
+    loadAudio();
+  }, []);
 
 
   return (
