@@ -1,68 +1,47 @@
+import { useState } from 'react';
 import './App.css'
 
-function App() {
+export default function App(): JSX.Element {
 
-  console.log(chrome.storage);
-
-
-  const chromeStorage = chrome.storage.local;
-  // const chromeStorage = window.localStorage;
-
-  const audioElement: HTMLAudioElement = document.getElementById("audioElement") as HTMLAudioElement;
+  const [audioSrc, setAudioSrc] = useState<string>("");
+  const [statusMessage, setStatusMessage] = useState<string>("");
+  const chromeStorage: chrome.storage.LocalStorageArea = chrome.storage.local;
 
   async function handleAudioUpload() {
     try {
-      const audioFileUpload: HTMLInputElement = document.getElementById("audioFileUpload") as HTMLInputElement;
-      const file = audioFileUpload.files![0];
+      const audioFileInput = document.getElementById("audioFileUpload") as HTMLInputElement;
+      const fileUpload: File = audioFileInput.files![0];
       const reader = new FileReader();
-      reader.onload = function (e: any) {
-        const audioDataURL = e.target.result;
+      reader.onload = function (e: ProgressEvent<FileReader>) {
+        const audioDataURL = e.target!.result as string;
         chromeStorage.set({ uploadedAudio: audioDataURL },
           function () {
             document.getElementById("message")!.innerText = "Successfully uploaded file. Please refresh the page to activate the custom sound.";
-            loadCurrentAudio();
+            loadAudio();
           }
         );
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(fileUpload);
     }
-    catch (e: any) {
-      document.getElementById("message")!.innerText = e.message;
+    catch (error: unknown) {
+      if (error instanceof Error) setStatusMessage(error.message);
     }
   }
 
-  async function loadCurrentAudio() {
-    chromeStorage.get(["uploadedAudio"], function (result: any) {
+  interface StoredData {
+    uploadedAudio?: string;
+  }
+
+  async function loadAudio() {
+    chromeStorage.get(["uploadedAudio"], function (result: StoredData) {
       if (result.uploadedAudio) {
-        const audioSource = document.createElement("source");
-        audioSource.setAttribute("src", result.uploadedAudio);
-        audioElement.innerHTML = "";
-        audioElement.appendChild(audioSource);
+        setAudioSrc(result.uploadedAudio);
+        const audioElement = document.getElementById("audioElement") as HTMLAudioElement;
         audioElement.load();
-        generateDeleteButton();
       }
     });
   }
 
-  function generateDeleteButton() {
-    if (document.getElementById("deleteSoundButton")) document.getElementById("deleteSoundButton")!.remove();
-    const delButton = document.createElement("button");
-    delButton.innerText = "Remove custom sound";
-    delButton.id = "deleteSoundButton";
-    delButton.classList.add("deleteSoundButton");
-    delButton.addEventListener("click", doDelete);
-    audioElement.after(delButton);
-  }
-
-  function doDelete() {
-    chromeStorage.clear();
-    audioElement.innerHTML = "";
-    audioElement.load();
-    document.getElementById("deleteSoundButton")!.remove();
-    document.getElementById("message")!.innerText = "Custom sound removed. Please refresh the page to complete the removal.";
-  }
-
-  loadCurrentAudio();
 
   return (
     <>
@@ -70,7 +49,7 @@ function App() {
         <h1>Messenger Notification<br />Sound Changer</h1>
 
         <p>Play current custom sound:
-          <audio controls id="audioElement">
+          <audio src={audioSrc} controls id="audioElement">
             Your browser does not support the audio tag.
           </audio>
         </p>
@@ -78,10 +57,8 @@ function App() {
           <label htmlFor="audioFileUpload">Upload new custom sound</label>
           <input type="file" accept="audio/*" id="audioFileUpload" onChange={handleAudioUpload} />
         </p>
-        <p><span id="message"></span></p>
+        <p><span id="message">{statusMessage}</span></p>
       </div>
     </>
   )
 }
-
-export default App
