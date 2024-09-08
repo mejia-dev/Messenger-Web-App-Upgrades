@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Messenger Web App Enhancements",
+  "name": "Messenger Web App Upgrades",
   "version": "1.0",
-  "description": "Adds PWA badges and close chat functionality to Messenger.com!",
+  "description": "Adds unread badges, ESC to close chat, and custom notification sounds to Messenger.com!",
   "author": {
     "email": "extensions@mejia.dev"
   },
