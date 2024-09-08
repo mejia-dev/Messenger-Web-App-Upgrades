@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Messenger PWA Badges",
+  "name": "Messenger Web App Enhancements",
   "version": "1.0",
-  "description": "Adds PWA badges to Messenger.com!",
+  "description": "Adds PWA badges and close chat functionality to Messenger.com!",
   "author": {
     "email": "extensions@mejia.dev"
   },
