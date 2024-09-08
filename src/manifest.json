@@ -7,7 +7,7 @@
     "email": "extensions@mejia.dev"
   },
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "mwau-popup/dist/index.html",
     "default_icon": "icons/default-icon.png"
   },
   "icons": {
