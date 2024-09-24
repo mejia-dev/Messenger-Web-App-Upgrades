@@ -1,0 +1,81 @@
+.settingsItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.settingsItemIcon {
+  margin-left: 1rem;
+  color: white;
+  min-height: 2rem;
+  min-width: 2rem;
+  max-width: 2rem;
+  background-color: #454545;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.settingsItemIcon > svg {
+  height: 1rem;
+}
+
+.settingsItemDescription {
+  width: 100%;
+  margin-left: .5rem;
+  font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.settingsItemDescriptionHeader {
+  /* font-size: 15px; */
+  font-size: 0.94rem;
+  color: rgb(228, 230, 235);
+  font-weight: bold;
+}
+
+.settingsItemDescriptionText {
+  /* font-size: 12px; */
+  font-size: .75rem;
+  color: rgb(176, 179, 184);
+}
+
+.settingsItemToggle {
+  background-color: #d8d8d8;
+  border-color: rgb(28, 30, 33);
+  min-width: 3rem;
+  max-width: 3rem;
+  height: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-radius: 200rem;
+}
+
+.settingsItemToggleSlider {
+  display: block;
+  border-radius: 50%;
+  width: 1.3rem;
+  height: 1.3rem;
+  background-color: #ffffff;
+  position: relative;
+  bottom: -.1rem;
+  left: .1rem;
+  transition: left .2s ease-in-out;
+}
+
+.settingsItemToggle > input {
+  display: none;
+}
+
+.settingsItemToggle:has(> input:checked) {
+  background-color: #429aff;
+}
+
+.settingsItemToggle:has(> input:checked) > .settingsItemToggleSlider {
+  left: 1.5rem;
+}
