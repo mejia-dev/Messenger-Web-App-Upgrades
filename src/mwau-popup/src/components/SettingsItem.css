@@ -77,5 +77,5 @@
 }
 
 .settingsItemToggle:has(> input:checked) > .settingsItemToggleSlider {
-  left: 1.5rem;
+  left: 1.6rem;
 }
