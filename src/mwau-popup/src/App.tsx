@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import './SettingsItem.css';
+import SettingsItem from './components/SettingsItem';
 
 export default function App(): JSX.Element {
 
@@ -20,7 +20,7 @@ export default function App(): JSX.Element {
   const [statusMessage, setStatusMessage] = useState<string>("");
   const [settingsList, setSettingsList] = useState<SettingsObject>(tempSettingsList);
 
-  
+
 
   async function handleAudioUpload(): Promise<void> {
     try {
@@ -58,26 +58,21 @@ export default function App(): JSX.Element {
   }
 
 
-  enum SettingsOption {
-    escCloseChat,
-    unreadBadges
-  }
-
-  async function toggleSetting(setting: SettingsOption) {
+  function toggleSetting(setting: keyof SettingsObject) {
+    console.log("Previous:" + settingsList.escCloseChat);
+    console.log("Previous:" + settingsList.unreadBadges);
     const savedSettings = settingsList;
     switch (setting) {
-      case SettingsOption.escCloseChat:
+      case 'escCloseChat':
         savedSettings.escCloseChat = !settingsList.escCloseChat;
         break;
-      case SettingsOption.unreadBadges:
+      case 'unreadBadges':
         savedSettings.unreadBadges = !settingsList.unreadBadges;
         break;
       default:
         break;
     }
-    chromeStorage.set({"settings": savedSettings}, () => {
-      console.log("Saved:")
-      console.log(savedSettings);
+    chromeStorage.set({ "settings": savedSettings }, () => {
       loadSettings();
     });
   }
@@ -88,11 +83,8 @@ export default function App(): JSX.Element {
 
   function loadSettings() {
     chromeStorage.get(["settings"], (result: StoredSettings) => {
-      console.log("Loaded:")
-      console.log(result);
       if (result.settings) {
         setSettingsList(result.settings);
-        console.log(settingsList);
       }
     });
   }
@@ -120,21 +112,25 @@ export default function App(): JSX.Element {
         <p><span id="message">{statusMessage}</span></p>
       </div>
       <div className="contentCard">
-        <div className='settingsItem'>
-          <div className='settingsItemIcon'>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
-            </svg>
-          </div>
-          <div className='settingsItemDescription'>
-            <span className='settingsItemDescriptionHeader'>Escape to Close</span>
-            <span className='settingsItemDescriptionText'>Press the escape key to close the current chat.</span>
-          </div>
-          <label className="settingsItemToggle" htmlFor='settingEscapeToClose'>
-            <input type='checkbox' id='settingEscapeToClose' checked={settingsList.escCloseChat} onChange={() => toggleSetting(SettingsOption.escCloseChat)} />
-            <div className="settingsItemToggleSlider"></div>
-          </label>
-        </div>
+        <h4 id='settingsHeader'>Settings</h4>
+        <br />
+
+        <SettingsItem
+          title="Escape to Close"
+          desc="Press the escape key to close the current chat."
+          value={settingsList.escCloseChat}
+          onChangeFunc={() => toggleSetting('escCloseChat')}
+          svgElement={(<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" /></svg>)}
+        />
+
+        <SettingsItem
+          title="PWA Unread Badges"
+          desc="Display badges on the app if installed as a PWA."
+          value={settingsList.unreadBadges}
+          onChangeFunc={() => toggleSetting('unreadBadges')}
+          svgElement={(<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-app-indicator" viewBox="0 0 16 16"><path d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1z" /><path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0" /></svg>)}
+        />
+
       </div>
     </>
   )
