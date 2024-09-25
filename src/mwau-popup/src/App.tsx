@@ -4,11 +4,25 @@ import './SettingsItem.css';
 
 export default function App(): JSX.Element {
 
-  const [audioSrc, setAudioSrc] = useState<string>("");
-  const [statusMessage, setStatusMessage] = useState<string>("");
   const chromeStorage: chrome.storage.LocalStorageArea = chrome.storage.local;
 
-  async function handleAudioUpload() {
+  interface SettingsObject {
+    escCloseChat: boolean,
+    unreadBadges: boolean
+  }
+
+  const tempSettingsList: SettingsObject = {
+    escCloseChat: true,
+    unreadBadges: true,
+  }
+
+  const [audioSrc, setAudioSrc] = useState<string>("");
+  const [statusMessage, setStatusMessage] = useState<string>("");
+  const [settingsList, setSettingsList] = useState<SettingsObject>(tempSettingsList);
+
+  
+
+  async function handleAudioUpload(): Promise<void> {
     try {
       const audioFileInput = document.getElementById("audioFileUpload") as HTMLInputElement;
       const fileUpload: File = audioFileInput.files![0];
@@ -33,7 +47,7 @@ export default function App(): JSX.Element {
     uploadedAudio?: string;
   }
 
-  async function loadAudio() {
+  async function loadAudio(): Promise<void> {
     chromeStorage.get(["uploadedAudio"], function (result: StoredData) {
       if (result.uploadedAudio) {
         setAudioSrc(result.uploadedAudio);
@@ -43,8 +57,49 @@ export default function App(): JSX.Element {
     });
   }
 
+
+  enum SettingsOption {
+    escCloseChat,
+    unreadBadges
+  }
+
+  async function toggleSetting(setting: SettingsOption) {
+    const savedSettings = settingsList;
+    switch (setting) {
+      case SettingsOption.escCloseChat:
+        savedSettings.escCloseChat = !settingsList.escCloseChat;
+        break;
+      case SettingsOption.unreadBadges:
+        savedSettings.unreadBadges = !settingsList.unreadBadges;
+        break;
+      default:
+        break;
+    }
+    chromeStorage.set({"settings": savedSettings}, () => {
+      console.log("Saved:")
+      console.log(savedSettings);
+      loadSettings();
+    });
+  }
+
+  interface StoredSettings {
+    settings?: SettingsObject;
+  }
+
+  function loadSettings() {
+    chromeStorage.get(["settings"], (result: StoredSettings) => {
+      console.log("Loaded:")
+      console.log(result);
+      if (result.settings) {
+        setSettingsList(result.settings);
+        console.log(settingsList);
+      }
+    });
+  }
+
   useEffect(() => {
     loadAudio();
+    loadSettings();
   }, []);
 
 
@@ -75,8 +130,8 @@ export default function App(): JSX.Element {
             <span className='settingsItemDescriptionHeader'>Escape to Close</span>
             <span className='settingsItemDescriptionText'>Press the escape key to close the current chat.</span>
           </div>
-          <label className="settingsItemToggle" htmlFor='enableEscapeToClose'>
-            <input type='checkbox' id='enableEscapeToClose'/>
+          <label className="settingsItemToggle" htmlFor='settingEscapeToClose'>
+            <input type='checkbox' id='settingEscapeToClose' checked={settingsList.escCloseChat} onChange={() => toggleSetting(SettingsOption.escCloseChat)} />
             <div className="settingsItemToggleSlider"></div>
           </label>
         </div>
