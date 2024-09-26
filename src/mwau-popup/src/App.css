@@ -1,7 +1,7 @@
 body {
   background-color: #f5f5f5;
   margin: 0px;
-  width: 100%;
+  width: 21rem;
   height: 100%;
   text-align: center;
 }
@@ -43,7 +43,7 @@ input[type="file"] {
   display: none;
 }
 
-#settingsHeader {
+.settingsHeader {
   font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
   line-height: 0%;
   font-size: .80rem;

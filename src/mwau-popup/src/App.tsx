@@ -7,11 +7,13 @@ export default function App(): JSX.Element {
   const chromeStorage: chrome.storage.LocalStorageArea = chrome.storage.local;
 
   interface SettingsObject {
+    customNotificationSound: boolean,
     escCloseChat: boolean,
     unreadBadges: boolean
   }
 
   const defaultSettingsList: SettingsObject = {
+    customNotificationSound: true,
     escCloseChat: true,
     unreadBadges: true,
   }
@@ -60,10 +62,11 @@ export default function App(): JSX.Element {
 
 
   function toggleSetting(setting: keyof SettingsObject) {
-    console.log("Previous:" + settingsList.escCloseChat);
-    console.log("Previous:" + settingsList.unreadBadges);
     const savedSettings = settingsList;
     switch (setting) {
+      case 'customNotificationSound':
+        savedSettings.customNotificationSound = !settingsList.customNotificationSound;
+        break;
       case 'escCloseChat':
         savedSettings.escCloseChat = !settingsList.escCloseChat;
         break;
@@ -101,24 +104,18 @@ export default function App(): JSX.Element {
     <>
       <div className="contentCard">
         <h1>Messenger Web App Upgrades</h1>
-
-        <p>Play current custom sound:
-          <audio src={audioSrc} controls id="audioElement">
-            Your browser does not support the audio tag.
-          </audio>
-        </p>
-        <p>
-          <label htmlFor="audioFileUpload">Upload new custom sound</label>
-          <input type="file" accept="audio/*" id="audioFileUpload" onChange={handleAudioUpload} />
-        </p>
-        <p><span id="message">{statusMessage}</span></p>
-      </div>
-
-      <div className="contentCard">
-        <h4 id='settingsHeader'>Settings</h4>
+        
         {loadingSettings ? (<p>Loading...</p>) : (
           <>
             <br />
+
+            <SettingsItem
+              title="Custom Notification Sound"
+              desc="Replace the default new message notification sound."
+              value={settingsList.customNotificationSound}
+              onChangeFunc={() => toggleSetting('customNotificationSound')}
+              svgElement={(<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-volume-up-fill" viewBox="0 0 16 16"><path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z" /><path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z" /><path d="M8.707 11.182A4.5 4.5 0 0 0 10.025 8a4.5 4.5 0 0 0-1.318-3.182L8 5.525A3.5 3.5 0 0 1 9.025 8 3.5 3.5 0 0 1 8 10.475zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06" /></svg>)}
+            />
 
             <SettingsItem
               title="Escape to Close"
@@ -137,6 +134,28 @@ export default function App(): JSX.Element {
             />
           </>
         )}
+      </div>
+
+      {!loadingSettings && settingsList.customNotificationSound ? (
+        <div className="contentCard">
+          <h4 className='settingsHeader'>Custom Notification Sound Settings</h4>
+
+          <p>Play current custom sound:
+            <audio src={audioSrc} controls id="audioElement">
+              Your browser does not support the audio tag.
+            </audio>
+          </p>
+          <p>
+            <label htmlFor="audioFileUpload">Upload new custom sound</label>
+            <input type="file" accept="audio/*" id="audioFileUpload" onChange={handleAudioUpload} />
+          </p>
+          <p><span id="message">{statusMessage}</span></p>
+        </div>
+      ) : (<></>)}
+
+      <div className="contentCard">
+      <h4 className='settingsHeader'>About</h4>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam facere laudantium maiores corrupti! Cum reprehenderit aut assumenda aliquid ipsum voluptatem mollitia impedit, accusantium ut deserunt molestias dolore tempora! Laborum, quibusdam.</p>
       </div>
 
     </>
