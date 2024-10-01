@@ -25,7 +25,7 @@ h1 {
   line-height: 0%;
   font-size: .80rem;
   font-weight: bold;
-  color: rgb(176, 179, 184);
+  color: rgb(101, 103, 107);
 }
 
 p {
@@ -49,5 +49,9 @@ p {
     background-color: #222222;
     color: #e7e9ed;
     box-shadow: 0 0 2px #191919;
+  }
+
+  .settingsHeader {
+    color: rgb(176, 179, 184);
   }
 }
