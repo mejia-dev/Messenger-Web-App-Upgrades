@@ -36,6 +36,10 @@ p {
   box-sizing: border-box;
 }
 
+#settingsMessage {
+  padding-top: 0px;
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #191919;
