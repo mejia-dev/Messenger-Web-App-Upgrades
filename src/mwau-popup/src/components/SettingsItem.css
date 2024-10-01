@@ -8,11 +8,11 @@
 
 .settingsItemIcon {
   margin-left: 1rem;
-  color: white;
+  color: rgb(5, 5, 5);
   min-height: 2rem;
   min-width: 2rem;
   max-width: 2rem;
-  background-color: #454545;
+  background-color: #f5f5f5;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -35,14 +35,14 @@
 .settingsItemDescriptionHeader {
   /* font-size: 15px; */
   font-size: 0.94rem;
-  color: rgb(228, 230, 235);
+  color: rgb(5, 5, 5);
   font-weight: bold;
 }
 
 .settingsItemDescriptionText {
   /* font-size: 12px; */
   font-size: .75rem;
-  color: rgb(176, 179, 184);
+  color: rgb(101, 103, 107);
 }
 
 .settingsItemToggle {
@@ -73,9 +73,28 @@
 }
 
 .settingsItemToggle:has(> input:checked) {
-  background-color: #429aff;
+  background-color: #0a7cff;
 }
 
 .settingsItemToggle:has(> input:checked) > .settingsItemToggleSlider {
   left: 1.6rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .settingsItemIcon {
+    color: white;
+    background-color: #454545;
+  }
+
+  .settingsItemDescriptionHeader {
+    color: rgb(228, 230, 235);
+  }
+
+  .settingsItemDescriptionText {
+    color: rgb(176, 179, 184);
+  }
+
+  .settingsItemToggle:has(> input:checked) {
+    background-color: #429aff;
+  }
 }
