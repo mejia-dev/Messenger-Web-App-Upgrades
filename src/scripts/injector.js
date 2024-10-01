@@ -6,9 +6,9 @@
   script.onload = function () {
     this.remove();
     document.dispatchEvent(new CustomEvent("MWAU-StartBadges"));
-    chrome.storage.local.get(["uploadedAudio"], function (result) {
-      if (result.uploadedAudio) {
-        document.dispatchEvent(new CustomEvent("MWAU-CustomSound", { detail: result.uploadedAudio }));
+    chrome.storage.local.get(["uploadedAudio", "settings"], function (result) {
+      if (result.uploadedAudio && result.settings) {
+        if (result.settings.customNotificationSound) document.dispatchEvent(new CustomEvent("MWAU-CustomSound", { detail: result.uploadedAudio }));
       }
     });
   }
