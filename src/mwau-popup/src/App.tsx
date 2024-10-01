@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import SettingsItem from './components/SettingsItem';
+import SoundSettings from './components/SoundSettings';
 
+export const chromeStorage: chrome.storage.LocalStorageArea = chrome.storage.local;
 export default function App(): JSX.Element {
-
-  const chromeStorage: chrome.storage.LocalStorageArea = chrome.storage.local;
 
   interface SettingsObject {
     customNotificationSound: boolean,
@@ -34,7 +34,7 @@ export default function App(): JSX.Element {
         const audioDataURL = e.target!.result as string;
         chromeStorage.set({ uploadedAudio: audioDataURL },
           () => {
-            setStatusMessage("Successfully uploaded file. Please refresh the page to activate the custom sound.");
+            setStatusMessage("Successfully uploaded file. Please refresh Messenger to activate the custom sound.");
             loadAudio();
           }
         );
@@ -58,6 +58,12 @@ export default function App(): JSX.Element {
         audioElement.load();
       }
     });
+  }
+
+  function deleteAudio(): void {
+    chromeStorage.remove("uploadedAudio");
+    setAudioSrc("");
+    setStatusMessage("Custom sound removed. Please refresh Messenger to complete the removal.");
   }
 
 
@@ -104,7 +110,7 @@ export default function App(): JSX.Element {
     <>
       <div className="contentCard">
         <h1>Messenger Web App Upgrades</h1>
-        
+
         {loadingSettings ? (<p>Loading...</p>) : (
           <>
             <br />
@@ -139,23 +145,18 @@ export default function App(): JSX.Element {
       {!loadingSettings && settingsList.customNotificationSound ? (
         <div className="contentCard">
           <h4 className='settingsHeader'>Custom Notification Sound Settings</h4>
-
-          <p>Play current custom sound:
-            <audio src={audioSrc} controls id="audioElement">
-              Your browser does not support the audio tag.
-            </audio>
-          </p>
-          <p>
-            <label htmlFor="audioFileUpload">Upload new custom sound</label>
-            <input type="file" accept="audio/*" id="audioFileUpload" onChange={handleAudioUpload} />
-          </p>
-          <p><span id="message">{statusMessage}</span></p>
+          <SoundSettings 
+            audioSrc={audioSrc}
+            uploadFunction={handleAudioUpload}
+            deleteFunction={deleteAudio}
+            statusMessage={statusMessage}
+          />
         </div>
       ) : (<></>)}
 
       <div className="contentCard">
-      <h4 className='settingsHeader'>About</h4>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam facere laudantium maiores corrupti! Cum reprehenderit aut assumenda aliquid ipsum voluptatem mollitia impedit, accusantium ut deserunt molestias dolore tempora! Laborum, quibusdam.</p>
+        <h4 className='settingsHeader'>About</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam facere laudantium maiores corrupti! Cum reprehenderit aut assumenda aliquid ipsum voluptatem mollitia impedit, accusantium ut deserunt molestias dolore tempora! Laborum, quibusdam.</p>
       </div>
 
     </>
