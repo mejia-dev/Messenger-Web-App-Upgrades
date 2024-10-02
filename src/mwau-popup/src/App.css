@@ -26,6 +26,7 @@ h1 {
   font-size: .80rem;
   font-weight: bold;
   color: rgb(101, 103, 107);
+  margin-bottom: 0;
 }
 
 p {
