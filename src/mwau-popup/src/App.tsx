@@ -3,6 +3,7 @@ import './App.css';
 import SettingsItem from './components/SettingsItem';
 import SoundSettings from './components/SoundSettings';
 import About from './components/About';
+import Header from './components/Header';
 
 export const chromeStorage: chrome.storage.LocalStorageArea = chrome.storage.local;
 export default function App(): JSX.Element {
@@ -67,18 +68,22 @@ export default function App(): JSX.Element {
     <>
       {aboutShown ?
         (
-          <>
-            <div className='contentCard'>
-              <h1 onClick={() => setAboutShown(!aboutShown)}>Messenger Web App Upgrades</h1>
-              <About />
-            </div>
-          </>
+          <div className='contentCard'>
+            <Header 
+              aboutVisible={aboutShown}
+              changeAboutVisible={setAboutShown}
+            />
+            <About />
+          </div>
         )
         :
         (
           <>
             <div className='contentCard'>
-              <h1 onClick={() => setAboutShown(!aboutShown)}>Messenger Web App Upgrades</h1>
+              <Header 
+                aboutVisible={aboutShown}
+                changeAboutVisible={setAboutShown}
+              />
               {loadingSettings ? (<p>Loading...</p>) : (
                 <>
                   <br />

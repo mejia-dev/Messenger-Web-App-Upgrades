@@ -1,0 +1,11 @@
+h1 {
+  font-size: large;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#aboutIcon > svg {
+  height: 1rem;
+  cursor: pointer;
+}
