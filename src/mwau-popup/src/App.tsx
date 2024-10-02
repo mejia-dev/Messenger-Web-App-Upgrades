@@ -65,15 +65,11 @@ export default function App(): JSX.Element {
 
   return (
     <>
-      {/* <div className="contentCard">
-        <h1 onClick={() => setAboutShown(!aboutShown)}>Messenger Web App Upgrades</h1>
-      </div> */}
       {aboutShown ?
         (
           <>
             <div className='contentCard'>
               <h1 onClick={() => setAboutShown(!aboutShown)}>Messenger Web App Upgrades</h1>
-              <h4 className='settingsHeader'>About</h4>
               <About />
             </div>
           </>
@@ -83,7 +79,6 @@ export default function App(): JSX.Element {
           <>
             <div className='contentCard'>
               <h1 onClick={() => setAboutShown(!aboutShown)}>Messenger Web App Upgrades</h1>
-              <h4 className='settingsHeader'>Settings</h4>
               {loadingSettings ? (<p>Loading...</p>) : (
                 <>
                   <br />
@@ -119,21 +114,9 @@ export default function App(): JSX.Element {
                 <SoundSettings />
               </div>
             ) : (<></>)}
-
           </>
         )
       }
-
-
-
-
-
-
-      {/* <div className="contentCard">
-        <h4 className='settingsHeader'>About</h4>
-        <About />
-      </div> */}
-
     </>
   )
 }
