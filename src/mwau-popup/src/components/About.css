@@ -1,0 +1,33 @@
+#appIcon {
+  height: 3rem;
+}
+
+#bmac {
+  display: flex;
+  justify-content: center;
+}
+
+#bmac > a {
+  display: block;
+  width: max-content;
+}
+
+#bmacButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#bmacLogo {
+  height: 1.5rem;
+}
+
+#bmacText {
+  font-size: 1rem;
+  padding-left: .5rem;
+}
+
+.noLinkStyle {
+  color: currentColor;
+  text-decoration: none;
+}
