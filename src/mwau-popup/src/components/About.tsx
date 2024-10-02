@@ -7,14 +7,13 @@ export default function About(): JSX.Element {
   return (
     <>
       <p>
-      <img id='appIcon' src={icon} /><br />
+        <img id='appIcon' src={icon} /><br />
         {manifest.name} v{manifest.version}<br />
-        By <a className='noLinkStyle' href='https://mejia.dev' target='_blank'>Aaron Mejia</a><br />
-        <a className='noLinkStyle' href='https://github.com/mejia-dev/Messenger-Web-App-Upgrades' target='_blank'>View Source Code</a>
+        <a style={{ color: "currentColor" }} href='https://github.com/mejia-dev/Messenger-Web-App-Upgrades' target='_blank'>View Source Code</a>
       </p>
 
       <p id='bmac'>
-        <a href='https://www.buymeacoffee.com/aaronmejia' className='noLinkStyle' target='_blank'>
+        <a href='https://www.buymeacoffee.com/aaronmejia' target='_blank'>
           <button id='bmacButton'>
             <svg id='bmacLogo' viewBox="0 0 884 1279" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M791.109 297.518L790.231 297.002L788.201 296.383C789.018 297.072 790.04 297.472 791.109 297.518V297.518Z" />
