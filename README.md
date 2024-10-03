@@ -4,3 +4,10 @@ Adds some additional functionality to Messenger.com:
 - Custom notification sound
 
 React/TypeScript frontend in `mwau-popup` folder.
+To build:
+cd src/mwau-popup
+npm install
+npm run build
+
+To lint:
+npm run lint
