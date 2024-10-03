@@ -1,5 +1,5 @@
 import './SoundSettings.css';
-import { chromeStorage } from '../App';
+import { chromeStorage } from '../storage';
 import { useEffect, useState } from 'react';
 
 
