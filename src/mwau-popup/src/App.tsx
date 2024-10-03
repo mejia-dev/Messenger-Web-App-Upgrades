@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import { chromeStorage } from './storage';
 import SettingsItem from './components/SettingsItem';
 import SoundSettings from './components/SoundSettings';
 import About from './components/About';
 import Header from './components/Header';
 
-export const chromeStorage: chrome.storage.LocalStorageArea = chrome.storage.local;
 export default function App(): JSX.Element {
 
   interface SettingsObject {

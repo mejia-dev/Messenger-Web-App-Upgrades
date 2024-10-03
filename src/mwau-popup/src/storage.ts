@@ -1,0 +1,1 @@
+export const chromeStorage: chrome.storage.LocalStorageArea = chrome.storage.local;
