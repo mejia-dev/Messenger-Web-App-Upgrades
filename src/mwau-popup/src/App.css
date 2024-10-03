@@ -50,7 +50,21 @@ button,
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   cursor: pointer;
-  align-content: center;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+button > svg,
+.styledLikeButton > svg {
+  height: 1.1rem;
+}
+
+button > span,
+.styledLikeButton > span {
+  font-size: .8rem;
+  padding-left: .2rem
 }
 
 button:hover,
