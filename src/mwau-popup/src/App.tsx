@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { chromeStorage } from './storage';
 import SettingsItem from './components/SettingsItem';
@@ -50,18 +50,18 @@ export default function App(): JSX.Element {
     settings?: SettingsObject;
   }
 
-  function loadSettings() {
+  const loadSettings = useCallback(() => {
     chromeStorage.get(["settings"], (result: StoredSettings) => {
       if (result.settings) {
         setSettingsList(result.settings);
       }
       setLoadingSettings(false);
     });
-  }
+  }, [setSettingsList, setLoadingSettings]);
 
   useEffect(() => {
     loadSettings();
-  }, []);
+  }, [loadSettings]);
 
 
   return (
