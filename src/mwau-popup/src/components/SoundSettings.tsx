@@ -1,6 +1,6 @@
 import './SoundSettings.css';
 import { chromeStorage } from '../storage';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 
 export default function SoundSettings(): JSX.Element {
@@ -32,7 +32,7 @@ export default function SoundSettings(): JSX.Element {
     uploadedAudio?: string;
   }
 
-  function loadAudio(): void {
+  const loadAudio = useCallback(() => {
     chromeStorage.get(["uploadedAudio"], function (result: StoredAudio) {
       if (result.uploadedAudio) {
         setAudioSrc(result.uploadedAudio);
@@ -40,7 +40,7 @@ export default function SoundSettings(): JSX.Element {
         audioElement.load();
       }
     });
-  }
+  }, [setAudioSrc]);
 
   function deleteAudio(): void {
     chromeStorage.remove("uploadedAudio");
@@ -50,7 +50,7 @@ export default function SoundSettings(): JSX.Element {
 
   useEffect(() => {
     loadAudio();
-  }, []);
+  }, [loadAudio]);
 
 
   return (
