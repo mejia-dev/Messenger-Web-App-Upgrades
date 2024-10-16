@@ -7,14 +7,14 @@
 
 <hr /><br />
 
-Messenger Web App Upgrades adds more features for [Messenger.com](https://www.messenger.com):
+Messenger Web App Upgrades adds new usability features for [Messenger.com](https://www.messenger.com):
 - Set a custom notification sound for new messages
 - Press the Escape key to close chats
-- Unread badges (if the app is installed as a PWA)
+- Display unread badges (only if the app is installed as a PWA)
 
 Install and launch the extension, configure settings as desired, then refresh Messenger for the changes to take effect.
 
-Uploaded audio data is stored exclusively on-device. Additonally, the extension does not collect data or report back to any server or cloud service.
+Uploaded audio data is stored exclusively on-device. Additionally, the extension does not collect data or report back to any server or cloud service.
 
 
 ## Setup / Installation Steps
