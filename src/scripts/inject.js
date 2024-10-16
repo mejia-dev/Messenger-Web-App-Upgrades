@@ -82,7 +82,7 @@ document.addEventListener("MWAU-CustomSound", (message) => {
     for (let mutation of mutations) {
       if (mutation.addedNodes.length > 0) {
         const addedElement = mutation.addedNodes[0];
-        if (addedElement.tagName === "AUDIO") {
+        if (addedElement.tagName === "AUDIO" && !addedElement.hasAttribute("loop")) {
           addedElement.src = customAudio;
           addedElement.play();
           observer.disconnect();
